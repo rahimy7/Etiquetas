@@ -1,38 +1,406 @@
-.App {
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+}
+
+/* Contenedor principal */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Estilos para los controles */
+.controls-container {
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.controls-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.app-title {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .form-row {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.print-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.print-button:hover {
+  background-color: #004494;
+}
+
+.print-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .print-button {
+    width: 100%;
+    height: 41px;
+  }
+}
+
+.instruction-text {
+  margin-top: 15px;
+  color: #666;
+  font-style: italic;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Cuadro de información sobre el formato del Excel */
+.info-box {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f0f7ff;
+  border: 1px solid #c8e1ff;
+  border-radius: 4px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.info-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #0056b3;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.info-box p {
+  margin: 10px 0;
+}
+
+.info-box ol {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.info-box code {
+  background-color: #f1f1f1;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+/* Estilos para el contenido */
+.content-container {
+  flex: 1;
+  padding: 20px;
+}
+
+.content-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.loading-message, .no-data-message {
+  text-align: center;
+  padding: 50px 0;
+  color: #666;
+}
+
+.preview-header {
+  margin-bottom: 30px;
+}
+
+.preview-title {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.preview-info {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.preview-instruction {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Estilos para la vista previa de páginas */
+.menu-preview {
+  margin-bottom: 40px;
+}
+
+.pagina-preview {
+  margin-bottom: 30px;
+  border: 1px solid #eee;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.pagina-titulo {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #666;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Estilos para la vista previa de etiquetas */
+.labels-preview {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 100%;
+  border: 1px solid #eee;
+  background-color: white;
+  min-height: 900px; /* Altura para mostrar las 10 filas */
+}
+
+.labels-row {
+  display: flex;
+  width: 100%;
+  flex: 1;
+}
+
+.label-cell {
+  border: 1px solid #ccc;
+  padding: 6px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+.label-cell.empty {
+  background-color: #f8f8f8;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.label-id {
+  font-size: 12px;
+  margin-bottom: 4px;
+  text-align: center;
+  width: 100%;
+  color: #777;
+}
+
+.label-name {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 4px;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.label-department {
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: #555;
+  text-align: center;
+  width: 100%;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+.label-menu {
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: pre-line;
+  text-transform: uppercase;
+}
+
+/* Estilos para el pie de página */
+.footer {
+  background-color: white;
+  padding: 15px;
+  margin-top: 20px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.footer-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Ocultar elementos en la impresión */
+.no-print {
+  display: block;
+}
+
+.print-only {
+  display: none;
+}
+
+/* Estilos para impresión - formato 2x10 (20 etiquetas por página) */
+@media print {
+  /* Ocultar elementos que no se deben imprimir */
+  .no-print {
+    display: none !important;
   }
-  to {
-    transform: rotate(360deg);
+  
+  /* Mostrar elementos solo para impresión */
+  .print-only {
+    display: block !important;
+  }
+  
+  /* Configuración general para impresión */
+  body, html {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: white !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .app-container, .content-container, .content-inner {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    max-width: none !important;
+  }
+  
+  /* Configuración de página para carta (8.5 x 11 pulgadas) */
+  @page {
+    size: letter portrait;
+    margin: 0.25in;
+  }
+  
+  /* Estructura de etiquetas 2x10 */
+  .print-grid {
+    page-break-after: always;
+    page-break-inside: avoid;
+    margin-bottom: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .print-row {
+    display: flex;
+    height: 10%; /* 10 filas = 10% cada una */
+  }
+  
+  .print-cell {
+    width: 50%; /* 2 columnas = 50% cada una */
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    page-break-inside: avoid;
+  }
+  
+  .print-cell-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .print-id {
+    font-size: 10pt;
+    margin-bottom: 2px;
+    text-align: center;
+    width: 100%;
+    color: #777;
+  }
+  
+  .print-person {
+    font-weight: bold;
+    font-size: 12pt;
+    margin-bottom: 2px;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+  }
+  
+  .print-department {
+    font-size: 10pt;
+    margin-bottom: 4px;
+    text-align: center;
+    width: 100%;
+    font-style: italic;
+    text-transform: uppercase;
+  }
+  
+  .print-items {
+    font-size: 9pt;
+    line-height: 1.1;
+    text-align: center;
+    width: 100%;
+    white-space: pre-line;
+    text-transform: uppercase;
+  }
+  
+  .print-cell.empty {
+    background-color: white;
   }
 }
